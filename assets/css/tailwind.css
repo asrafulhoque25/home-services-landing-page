@@ -731,6 +731,14 @@ html.lenis, html.lenis body {
 
  /* Home services css start */
 
+  .arrow-badge {
+      display: inline-flex;
+      align-items: center;
+      position: relative;
+      background: #FF6202;
+      padding: 6px 20px 6px 14px;
+      clip-path: polygon(0% 0%, calc(100% - 14px) 0%, 100% 50%, calc(100% - 14px) 100%, 0% 100%);
+      white-space: nowrap;
+    }
 
- 
  /* Home services css end */
