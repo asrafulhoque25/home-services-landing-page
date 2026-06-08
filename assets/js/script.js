@@ -1976,3 +1976,89 @@ if (allIndustriesGrid) {
 
 
 // restaurant page js end
+
+
+
+
+
+
+
+
+
+// Home services page js start
+
+function initFAQ(section) {
+  const faqItems = section.querySelectorAll('.faq-item');
+  if (faqItems.length === 0) return;
+
+  faqItems.forEach(item => {
+    const trigger   = item.querySelector('.faq-trigger');
+    const content   = item.querySelector('.faq-content');
+    const border    = item.querySelector('.faq-border');
+    const iconClose = item.querySelector('.icon-close');
+    if (!trigger) return;
+
+    if (iconClose) {
+      iconClose.style.transition = 'transform 0.5s ease-in-out';
+    }
+
+    trigger.addEventListener('click', () => {
+      const isOpen = item.classList.contains('active');
+
+      faqItems.forEach(other => {
+        if (other !== item && other.classList.contains('active')) {
+          other.classList.remove('active');
+          const oc = other.querySelector('.faq-content');
+          const ob = other.querySelector('.faq-border');
+          const oC = other.querySelector('.icon-close');
+          if (oc) oc.style.maxHeight = '0';
+          if (ob) ob.classList.add('hidden');
+          if (oC) oC.style.transform = 'rotate(0deg)';
+        }
+      });
+
+      if (isOpen) {
+        item.classList.remove('active');
+        if (content)   content.style.maxHeight = '0';
+        if (border)    border.classList.add('hidden');
+        if (iconClose) iconClose.style.transform = 'rotate(0deg)';
+      } else {
+        item.classList.add('active');
+        if (content)   content.style.maxHeight = content.scrollHeight + 'px';
+        if (border)    border.classList.remove('hidden');
+        if (iconClose) iconClose.style.transform = 'rotate(45deg)';
+      }
+    });
+  });
+}
+
+function initFAQGrid(section) {
+  const wrap = section.querySelector('#faqGridWrap');
+  if (!wrap) return;
+
+  const items = Array.from(wrap.querySelectorAll('.faq-item'));
+  if (items.length === 0) return;
+
+  const leftCol  = document.createElement('div');
+  const rightCol = document.createElement('div');
+  leftCol.className  = 'flex flex-col gap-0 w-full md:w-1/2';
+  rightCol.className = 'flex flex-col gap-0 w-full md:w-1/2';
+
+  items.forEach((item, i) => {
+    if (i % 2 === 0) leftCol.appendChild(item);
+    else             rightCol.appendChild(item);
+  });
+
+  wrap.innerHTML = '';
+  wrap.className = 'flex flex-col md:flex-row md:gap-8 items-start';
+  wrap.appendChild(leftCol);
+  wrap.appendChild(rightCol);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  document.querySelectorAll('.home-services-faq').forEach(section => {
+    initFAQGrid(section);
+    initFAQ(section);
+  });
+});
+// Home services page js end
